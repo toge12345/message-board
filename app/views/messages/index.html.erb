@@ -2,20 +2,37 @@
     <div class="panel-heading">
         メッセージ一覧
     </div>    
-    <div class-"pane-body">
+    <div class="panel-body">
         <%= @messages.each do |message| %>
             <span class="label label-info"><%= message.name %></span>
-             <%= message.body %>
-             <br>
+             <%= simple_format(h(message.body)) %>
+            <br>
         <% end %>
     </div>
 </div>
 
-<%= form_for(Message.new) do |f| %>
-  名前:
-  <%= f.text_field :name %>
+<%= form_for(@message) do |f| %>
+    <% if @message.errors.present? %>
+        <div class="alert alert-danger">
+            <%= alert %>
+            <ul>
+                <% @message.errors.full_messages.each do |full_message| %>
+                  <li>
+                    <%= full_message %>
+                  </li>
+                <% end %> 
+            </ul>
+        </div>
+    <% end %>
 
-  内容:
-  <%= f.text_field :body %>
-  <%= f.submit class: "btn btn-sm btn-primary" %>
+    <div class="panel panel-default">
+        <div class="panel-heading">メッセージ投稿</div>
+        <table class="table">
+            
+            <tr><td>名前:</td><td><%= f.text_field :name %></td></tr>
+            <tr><td>内容:</td><td><%= f.text_area :body, :size => "90x2" %></td></tr>
+        </table>
+    </div>
+    <%= f.submit class: "btn btn-sm btn-primary" %>  
+
 <% end %>
