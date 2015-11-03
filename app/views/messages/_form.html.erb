@@ -1,0 +1,25 @@
+<%= form_for(@message) do |f| %>
+    <% if @message.errors.present? %>
+        <div class="alert alert-danger">
+            <%= alert %>
+            <ul>
+                <% @message.errors.full_messages.each do |full_message| %>
+                  <li>
+                    <%= full_message %>
+                  </li>
+                <% end %> 
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">メッセージ投稿</div>
+        <table class="table">
+            
+            <tr><td>名前:</td><td><%= f.text_field :name %></td></tr>
+            <tr><td>内容:</td><td><%= f.text_area :body, :size => "90x2" %></td></tr>
+        </table>
+    </div>
+    <%= f.submit class: "btn btn-sm btn-primary" %>  
+
+<% end %>
